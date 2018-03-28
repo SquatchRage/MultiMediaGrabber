@@ -44,11 +44,11 @@ public class Talker
                 
     }
     
-    String recieve (String id) throws IOException
+    String recieve () throws IOException
     {
         String received;
         received = buffRead.readLine();
-        System.out.println("Received by " +id+ received);
+        System.out.println(received);
 
         return received;
     }

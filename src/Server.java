@@ -27,17 +27,22 @@ private ServerSocket serverSocket;
 Container cp;
 String message;
 JPanel panel;
-JButton killButton, traverseButton, messageButotn;
+JButton killButton,  messageButotn;
+static JButton traverseButton;
 ButtonGroup group;
 Server server;
 String ID = "I am from the server";
 private String killCommand = "Kill Program";
 private String showMessage= "Show Message";
 private String searchCommand = "Get Files";
+boolean connect = true;
 
  public Server() throws Throwable{
 	 
-	
+	 serverSocket = new ServerSocket(1201);
+	 socket = serverSocket.accept();
+     talk = new Talker( socket,  ID);
+     System.out.println("Connected:Server"); 
 
 	panel = new JPanel(new GridBagLayout());
 	killButton = new JButton("Kill Program");
@@ -77,15 +82,7 @@ private String searchCommand = "Get Files";
 	cp.add(panel, BorderLayout.CENTER);
 	setUp();
 	
-	serverSocket = new ServerSocket(1201);
-	socket = serverSocket.accept();
-	talk = new Talker( socket,  ID);
-	//talk.send(ID);
-	
-	while(true){
-	message = talk.recieve(ID);
-	}
-	
+
  }	
 
 		@Override
@@ -106,6 +103,7 @@ private String searchCommand = "Get Files";
 
 					try {
 						talk.send(searchCommand);
+						traverseButton.setEnabled(false);
 					} catch (IOException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
